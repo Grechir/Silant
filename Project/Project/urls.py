@@ -37,4 +37,5 @@ router.register('directory', DirectoryViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('accounts/', include('allauth.urls')),
 ]

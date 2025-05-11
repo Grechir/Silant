@@ -6,14 +6,20 @@ def sync_profile_directories(profile: Profile):
         Directory.objects.update_or_create(
             entity=dict(Profile.ROLE_CHOICES).get(profile.role),
             name=profile.company_name,
-            defaults={'description': profile.company_description or ''}
+            defaults={
+                'description': profile.company_description or '',
+                'user': profile.user,
+                      }
         )
 
     if profile.role == 'service':
         Directory.objects.update_or_create(
             entity='Организация, проводившая ТО',
             name=profile.company_name,
-            defaults={'description': profile.company_description or ''}
+            defaults={
+                'description': profile.company_description or '',
+                'user': profile.user,
+                      }
         )
 
 

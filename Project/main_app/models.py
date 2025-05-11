@@ -15,14 +15,12 @@ class Profile(models.Model):
     company_name = models.CharField(max_length=128, blank=True, null=True)
     company_description = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return f"{self.user.name} have a {self.role.name} permissions"
-
 # создание Справочников для комплектующих машины
 class Directory(models.Model):
     entity = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -141,7 +139,7 @@ class Complaint(models.Model):
                                        related_name='recovery_methods',
                                        verbose_name='Способ восстановления')
 
-    spareParts = models.CharField(max_length=1024, verbose_name='Используемые запасные части')
+    spareParts = models.CharField(max_length=1024, null=True, blank=True, verbose_name='Используемые запасные части')
     recoveryDate = models.DateField(verbose_name='Дата восстановления')
 
     downtime = models.PositiveIntegerField(verbose_name='Время простоя техники', null=True, blank=True)
