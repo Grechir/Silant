@@ -1,5 +1,5 @@
 """
-URL configuration for Project project.
+URL configuration for Project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -21,6 +21,7 @@ from main_app.views import (
     UserWithProfileViewSet,
     ProfileViewSet,
     MachineViewSet,
+    PublicMachineViewSet,
     MaintenanceViewSet,
     ComplaintViewSet,
     DirectoryViewSet
@@ -30,6 +31,7 @@ router = DefaultRouter()
 router.register('users', UserWithProfileViewSet)
 router.register('profile', ProfileViewSet)
 router.register('machine', MachineViewSet)
+router.register('public/machine', PublicMachineViewSet)
 router.register('maintenance', MaintenanceViewSet)
 router.register('complaint', ComplaintViewSet)
 router.register('directory', DirectoryViewSet)

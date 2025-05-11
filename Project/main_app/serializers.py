@@ -113,6 +113,23 @@ class DirectorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PublicMachineSerializer(serializers.ModelSerializer):  # используется для неавторизованных пользователей
+    class Meta:
+        model = Machine
+        fields = [
+            'model',
+            'serial_number',
+            'engine',
+            'engineID',
+            'transmission',
+            'transmissionID',
+            'drivingAxle',
+            'drivingAxleID',
+            'controlledAxle',
+            'controlledAxleID',
+        ]
+
+
 class MachineSerializer(serializers.ModelSerializer):
 
     class Meta:

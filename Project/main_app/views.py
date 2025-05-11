@@ -1,13 +1,19 @@
 from rest_framework import viewsets
+from rest_framework import filters
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
+
 
 from .mixins import RoleBasedQuerysetMixin
 from .permissions import RoleBasedAccessPermission
+from .filters import MachineFilter, MaintenanceFilter, ComplaintFilter
 from .models import Profile, Machine, Maintenance, Complaint, Directory
 from .serializers import (
     UserWithProfileSerializer,
     ProfileSerializer,
     MachineSerializer,
+    PublicMachineSerializer,
     MaintenanceSerializer,
     ComplaintSerializer,
     DirectorySerializer
@@ -35,10 +41,41 @@ class ProfileViewSet(viewsets.ModelViewSet):
         'manager': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     }
 
-class MachineViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
+class PublicMachineViewSet(viewsets.ModelViewSet):
+    """
+    Публичное представление списка машин с поиском по серийному номеру.
+    По умолчанию ничего не показывается. При наличии фильтра (серийного номера)
+    возвращаются данные.
+    """
     queryset = Machine.objects.all()
+    serializer_class = PublicMachineSerializer
+    permission_classes = [RoleBasedAccessPermission]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['serial_number']
+
+    permission_config = {
+        'client': [],
+        'service': [],
+        'manager': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        'anonymous': ['GET'],
+    }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Проверка на наличие фильтра
+        serial_number = self.request.query_params.get('search', None)
+        if serial_number:
+            return Machine.objects.filter(serial_number=serial_number)
+        return Machine.objects.none()
+
+
+class MachineViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
+    queryset = Machine.objects.all().order_by('-shipmentDate')  # сортировка по умолчанию
     serializer_class = MachineSerializer
     permission_classes = [RoleBasedAccessPermission]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = MachineFilter
 
     permission_config = {
         'anonymous': ['GET'],
@@ -49,9 +86,11 @@ class MachineViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
 
 
 class MaintenanceViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
-    queryset = Maintenance.objects.all()
+    queryset = Maintenance.objects.all().order_by('-maintenanceDate')  # сортировка по умолчанию
     serializer_class = MaintenanceSerializer
     permission_classes = [RoleBasedAccessPermission]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = MaintenanceFilter
 
     permission_config = {
         'client': ['GET', 'POST', 'PUT', 'PATCH'],
@@ -60,9 +99,11 @@ class MaintenanceViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
     }
 
 class ComplaintViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
-    queryset = Complaint.objects.all()
+    queryset = Complaint.objects.all().order_by('-breakdownDate')  # сортировка по умолчанию
     serializer_class = ComplaintSerializer
     permission_classes = [RoleBasedAccessPermission]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = ComplaintFilter
 
     permission_config = {
         'client': ['GET'],
