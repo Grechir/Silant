@@ -20,9 +20,9 @@ git clone https://github.com/Grechir/Silant.git
    python manage.py runserver
    ```
 3. **Открываем frontend сервер**
-```
-cd ../project_frontend
-npm i
-npm run start
-```
+   ```
+   cd ../project_frontend
+   npm i
+   npm run start
+   ```
 
