@@ -49,7 +49,7 @@
    ```
 3. **Открываем frontend сервер**
    ```
-   cd ../project_frontend
+   cd silant/project_frontend
    npm i
    npm run start
    ```
