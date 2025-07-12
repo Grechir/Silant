@@ -9,10 +9,9 @@
 ## 📦 Установка
 
 1. **Клонируем репозиторий:**
-
-```bash
-git clone https://github.com/Grechir/Silant.git
-```
+   ```bash
+   git clone https://github.com/Grechir/Silant.git
+   ```
 2. **Открываем backend сервер**
    ```
    cd silant/project
