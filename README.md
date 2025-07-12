@@ -24,4 +24,8 @@
    npm i
    npm run start
    ```
-
+   
+Теперь бэкенд доступен по адресу
+http://localhost:8000
+а фронтенд — по адресу
+http://localhost:3000
