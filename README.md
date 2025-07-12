@@ -13,15 +13,16 @@
 ```bash
 git clone https://github.com/Grechir/Silant.git
 ```
-2. **Открываем backend сервер** /n
-2.1. зайти в папку:
+2. **Открываем backend сервер**
    ```
    cd silant/project
+   pip install -r requirements.txt
+   python manage.py runserver
    ```
-2.2. установить зависимости: ```pip install -r requirements.txt```
-2.3. запустить сервер разработки: ```python manage.py runserver```
-4. **Открываем frontend сервер**
-3.1 зайти в папку: ```cd ../project_frontend```
-3.2 установить зависимости: ```npm i```
-3.3 запустить сервер разработки: ```npm run start```
+3. **Открываем frontend сервер**
+```
+cd ../project_frontend
+npm i
+npm run start
+```
 
