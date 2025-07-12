@@ -13,7 +13,7 @@
 ```bash
 git clone https://github.com/Grechir/Silant.git
 ```
-2. **Открываем backend сервер**
+2. **Открываем backend сервер** /n
 2.1. зайти в папку:
    ```
    cd silant/project
