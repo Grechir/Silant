@@ -1,0 +1,48 @@
+.clientDashboardWrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.table {
+  margin-top: 1rem;
+  max-height: 600px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.title {
+  display: flex;
+  color: #EBE6D6;
+  font-size: 1.5rem;
+  justify-content: space-between;
+  max-width: 33rem;
+}
+
+.text {
+  font-size: 1.5rem;
+  color: #EBE6D6;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.backButton {
+  background: none;
+  border: 1px solid #EBE6D6;
+  border-radius: 0.5rem;
+  color: #EBE6D6;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  display: inline-block;
+  transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease;
+}
+
+.backButton:hover {
+  transform: scale(1.1);
+  background-color: #D20A11;
+}
+
+.highlight {
+  color: #d19d04;
+}

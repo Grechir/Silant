@@ -1,3 +1,4 @@
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class RoleBasedAccessPermission(BasePermission):
@@ -10,6 +11,7 @@ class RoleBasedAccessPermission(BasePermission):
     def has_permission(self, request, view):
         config = getattr(view, 'permission_config', {})
         role = None  # role всегда существует, даже если никакое условие не выполнилось
+        auth_header = request.headers.get('Authorization', '')
 
         if request.user.is_authenticated:
             role = getattr(request.user.profile, 'role', None)

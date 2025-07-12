@@ -1,0 +1,31 @@
+/* TabButtons.module.css */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.button {
+    background: none;
+    border: 1px solid #EBE6D6;
+    color: #EBE6D6;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease;
+}
+
+.button:hover:not(:disabled) {
+    background-color: #1f4f8c;
+}
+
+/* Активная кнопка — выделена */
+.button:disabled {
+    background-color: #0f3257;
+    color: #acaaaa;
+    border-color: #0056b3;
+    font-weight: bold;
+    box-shadow: none;
+    transform: scale(0.97);
+}

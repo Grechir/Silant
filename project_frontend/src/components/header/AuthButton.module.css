@@ -1,0 +1,16 @@
+.authButton {
+    margin: 2rem;
+    background: none;
+    border: 1px solid #EBE6D6;
+    color: #EBE6D6;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.authButton:hover {
+    background-color: #D20A11;   /* цвет фона при наведении */
+    color: #EBE6D6;              /* цвет текста */
+    transform: scale(1.1);       /* увеличение кнопки */
+}

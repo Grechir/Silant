@@ -1,0 +1,62 @@
+/* Убираем фон/тень у контейнера тултипа Tippy */
+.tippy-box[data-theme="custom"] {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  filter: none;
+  backdrop-filter: none;
+}
+
+/* Убираем отступы у содержимого тултипа */
+.tippy-box[data-theme="custom"] > .tippy-content {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+/* Твой кастомный тултип */
+.customTooltip {
+  position: relative;
+  padding: 8px 12px;
+  background: linear-gradient(to right, #4b6cb7, #182848);
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(75, 108, 183, 0.5);
+  animation: floatIn 0.3s ease-out;
+
+}
+
+/* Стрелочка */
+.tooltipArrow {
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  color: #4b6cb7;
+  font-size: 0.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Анимация появления */
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltipTarget {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

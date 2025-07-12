@@ -114,23 +114,39 @@ class DirectorySerializer(serializers.ModelSerializer):
 
 
 class PublicMachineSerializer(serializers.ModelSerializer):  # используется для неавторизованных пользователей
+    engine_data = DirectorySerializer(source='engine', read_only=True)
+    transmission_data = DirectorySerializer(source='transmission', read_only=True)
+    drivingAxle_data = DirectorySerializer(source='drivingAxle', read_only=True)
+    controlledAxle_data = DirectorySerializer(source='controlledAxle', read_only=True)
+    model_data = DirectorySerializer(source='model', read_only=True)
+
     class Meta:
         model = Machine
         fields = [
             'model',
+            'model_data',
             'serial_number',
+
             'engine',
             'engineID',
+            'engine_data',
+
             'transmission',
             'transmissionID',
+            'transmission_data',
+
             'drivingAxle',
             'drivingAxleID',
+            'drivingAxle_data',
+
             'controlledAxle',
             'controlledAxleID',
+            'controlledAxle_data',
         ]
 
 
 class MachineSerializer(serializers.ModelSerializer):
+    shipmentDate = serializers.SerializerMethodField()
 
     class Meta:
         model = Machine
@@ -153,14 +169,15 @@ class MachineSerializer(serializers.ModelSerializer):
         # создаем поля справочников на основе словаря для Машины
         add_directory_fields(self, fields_info)  # утилита
 
+    def get_shipmentDate(self, obj):
+        if obj.shipmentDate:
+            return obj.shipmentDate.strftime('%d.%m.%Y')
+        return None
+
 
 class MaintenanceSerializer(serializers.ModelSerializer):
-
-    # автоматически создаваемый справочник
-    machine = serializers.PrimaryKeyRelatedField(
-        queryset=Machine.objects.all(),
-        label='Зав. № машины'
-    )
+    maintenanceDate = serializers.SerializerMethodField()
+    orderDate = serializers.SerializerMethodField()
 
     class Meta:
         model = Maintenance
@@ -173,20 +190,27 @@ class MaintenanceSerializer(serializers.ModelSerializer):
         fields_info = {
             'maintenanceType': ('Вид ТО', 'Вид ТО'),
             'maintenance_org': ('Организация, проводившая ТО', 'Организация, проводившая ТО'),
-            'serviceCompany': ('Сервисная компания', 'Сервисная компания')
+            'serviceCompany': ('Сервисная компания', 'Сервисная компания'),
+            'machine': ('Зав. № машины', 'Зав. № машины'),
         }
 
         # создаем поля справочников на основе словаря для ТО
         add_directory_fields(self, fields_info)  # утилита
 
+    def get_maintenanceDate(self, obj):
+        if obj.maintenanceDate:
+            return obj.maintenanceDate.strftime('%d.%m.%Y')
+        return None
+
+    def get_orderDate(self, obj):
+        if obj.orderDate:
+            return obj.orderDate.strftime('%d.%m.%Y')
+        return None
+
 
 class ComplaintSerializer(serializers.ModelSerializer):
-
-    # автоматически создаваемый справочник
-    machine = serializers.PrimaryKeyRelatedField(
-        queryset=Machine.objects.all(),
-        label='Зав. № машины'
-    )
+    breakdownDate = serializers.SerializerMethodField()
+    recoveryDate = serializers.SerializerMethodField()
 
     class Meta:
         model = Complaint
@@ -199,8 +223,19 @@ class ComplaintSerializer(serializers.ModelSerializer):
         fields_info = {
             'breakdownNode': ('Узел поломки', 'Узел поломки'),
             'recoveryMethod': ('Способ восстановления', 'Способ восстановления'),
-            'serviceCompany': ('Сервисная компания', 'Сервисная компания')
+            'serviceCompany': ('Сервисная компания', 'Сервисная компания'),
+            'machine': ('Зав. № машины', 'Зав. № машины'),
         }
 
         # создаем поля справочников на основе словаря для ТО
         add_directory_fields(self, fields_info)  # утилита
+
+    def get_breakdownDate(self, obj):
+        if obj.breakdownDate:
+            return obj.breakdownDate.strftime('%d.%m.%Y')
+        return None
+
+    def get_recoveryDate(self, obj):
+        if obj.recoveryDate:
+            return obj.recoveryDate.strftime('%d.%m.%Y')
+        return None

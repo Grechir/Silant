@@ -26,12 +26,16 @@ from main_app.views import (
     ComplaintViewSet,
     DirectoryViewSet
 )
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = DefaultRouter()
 router.register('users', UserWithProfileViewSet)
 router.register('profile', ProfileViewSet)
-router.register('machine', MachineViewSet)
-router.register('public/machine', PublicMachineViewSet)
+router.register('machine', MachineViewSet, basename='private_machine')
+router.register('public/machine', PublicMachineViewSet, basename='public_machine')
 router.register('maintenance', MaintenanceViewSet)
 router.register('complaint', ComplaintViewSet)
 router.register('directory', DirectoryViewSet)
@@ -40,4 +44,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('accounts/', include('allauth.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

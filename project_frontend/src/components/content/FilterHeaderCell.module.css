@@ -1,0 +1,26 @@
+.select {
+    /* Основные стили */
+    color: #163E6C;
+    width: 5rem;
+    margin-top: 0.3rem;
+    font-weight: bold;
+    background-color: #EBE6D6;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    /* Стиль при фокусе */
+    &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                0 0 8px rgba(102, 175, 233, 0.6);
+    }
+
+    /* Стиль при наведении */
+    &:hover {
+    transform: scale(1.05);
+    }
+
+}

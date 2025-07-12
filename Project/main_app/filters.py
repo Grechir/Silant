@@ -1,5 +1,6 @@
 import django_filters
-from .models import Machine, Maintenance, Complaint
+from .models import Machine, Maintenance, Complaint, Directory
+
 
 class MachineFilter(django_filters.FilterSet):
     class Meta:
@@ -18,7 +19,7 @@ class MaintenanceFilter(django_filters.FilterSet):
         model = Maintenance
         fields = {
             'maintenanceType': ['exact'],
-            'machine': ['icontains'],
+            'machine': ['exact'],
             'serviceCompany': ['exact'],
         }
 
@@ -33,7 +34,12 @@ class ComplaintFilter(django_filters.FilterSet):
         }
 
 
-
+class DirectoryFilter(django_filters.FilterSet):
+    class Meta:
+        model = Directory
+        fields = {
+            'entity': ['exact'],  # фильтр по точному совпадению entity
+        }
 
 
 

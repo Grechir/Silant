@@ -1,0 +1,124 @@
+.tableWrapper {
+    width: 100%;
+    min-width: fit-content;
+    overflow: auto;
+    max-height: 540px;
+    background-color: #EBE6D6;
+    border-radius: 0.8rem;
+    position: relative;
+}
+
+.table {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+thead th {
+    position: sticky;
+    padding: 1.5rem;
+    z-index: 20;
+    top: 0;
+    background-color: #163E6C;
+    color: #EBE6D6;
+    border: 1px solid #b6af93;
+    border-radius: 0.8rem 0.8rem 0 0;
+    text-align: center;
+}
+
+tbody td {
+    text-align: center;
+    padding: 1.5rem;
+    font-weight: bold;
+    border: 1px solid #b6af93;
+}
+
+tbody tr:hover {
+    background-color: rgba(182, 175, 147, 0.3);
+}
+
+.clickableCell {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.clickableCell:hover {
+    background-color: #f0f0f0; /* светло-серый фон */
+}
+
+.serialLinkCell {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6); /* "пружинная" анимация */
+    z-index: 10;
+}
+
+/* Эффект карточки */
+.serialLinkCell:hover {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px) scale(1.02);
+    border-radius: 4px;
+}
+
+/* Дополнительный эффект при клике */
+.serialLinkCell:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/*!* Стиль для tooltip *!*/
+/*.serialLinkCell:hover::before {*/
+/*    content: "🔍 Открыть меню машины";*/
+/*    position: absolute;*/
+/*    bottom: calc(100% + 8px);*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    background: linear-gradient(to right, #4b6cb7, #182848);*/
+/*    color: white;*/
+/*    padding: 8px 12px;*/
+/*    border-radius: 0.5rem;*/
+/*    font-size: 0.9rem;*/
+/*    font-weight: 500;*/
+/*    white-space: nowrap;*/
+/*    z-index: 30;*/
+/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
+/*    opacity: 0;*/
+/*    animation: floatIn 0.3s 0.1s ease-out forwards;*/
+/*}*/
+
+/*!* Стрелка-бриллиант *!*/
+/*.serialLinkCell:hover::after {*/
+/*    content: '◆';*/
+/*    position: absolute;*/
+/*    bottom: calc(100% - 5px);*/
+/*    left: 50%;*/
+/*    z-index: 30;*/
+/*    transform: translateX(-50%) rotate(180deg);*/
+/*    color: #4b6cb7;*/
+/*    font-size: 12px;*/
+/*    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+/*    opacity: 0;*/
+/*    animation: fadeIn 0.2s 0.2s ease-out forwards;*/
+/*}*/
+
+/*!* Анимации *!*/
+/*@keyframes floatIn {*/
+/*    0% {*/
+/*        opacity: 0;*/
+/*        transform: translateX(-50%) translateY(10px);*/
+/*  }*/
+/*    100% {*/
+/*        opacity: 1;*/
+/*        transform: translateX(-50%) translateY(0);*/
+/*    }*/
+/*}*/
+
+/*@keyframes fadeIn {*/
+/*    to { opacity: 1; }*/
+/*}*/
+
+
+
+
+

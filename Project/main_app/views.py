@@ -1,3 +1,5 @@
+from types import GetSetDescriptorType
+
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.filters import OrderingFilter
@@ -7,7 +9,7 @@ from django.contrib.auth.models import User
 
 from .mixins import RoleBasedQuerysetMixin
 from .permissions import RoleBasedAccessPermission
-from .filters import MachineFilter, MaintenanceFilter, ComplaintFilter
+from .filters import MachineFilter, MaintenanceFilter, ComplaintFilter, DirectoryFilter
 from .models import Profile, Machine, Maintenance, Complaint, Directory
 from .serializers import (
     UserWithProfileSerializer,
@@ -36,10 +38,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [RoleBasedAccessPermission]
 
     permission_config = {
-        'client': [],
-        'service': [],
+        'client': ['GET'],
+        'service': ['GET'],
         'manager': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     }
+
+    def get_queryset(self):
+        return Profile.objects.filter(user=self.request.user)
 
 class PublicMachineViewSet(viewsets.ModelViewSet):
     """
@@ -64,9 +69,9 @@ class PublicMachineViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
 
         # Проверка на наличие фильтра
-        serial_number = self.request.query_params.get('search', None)
+        serial_number = self.request.query_params.get('search', None)  # берем search из url
         if serial_number:
-            return Machine.objects.filter(serial_number=serial_number)
+            return Machine.objects.filter(serial_number=serial_number).order_by('id')
         return Machine.objects.none()
 
 
@@ -78,7 +83,6 @@ class MachineViewSet(RoleBasedQuerysetMixin, viewsets.ModelViewSet):
     filterset_class = MachineFilter
 
     permission_config = {
-        'anonymous': ['GET'],
         'client': ['GET'],
         'service': ['GET'],
         'manager': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -115,9 +119,10 @@ class DirectoryViewSet(viewsets.ModelViewSet):
     queryset = Directory.objects.all()
     serializer_class = DirectorySerializer
     permission_classes = [RoleBasedAccessPermission]
+    filterset_class = DirectoryFilter
 
     permission_config = {
-        'client': [],
-        'service': [],
+        'client': ['GET'],
+        'service': ['GET'],
         'manager': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     }

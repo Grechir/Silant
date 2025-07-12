@@ -14,12 +14,12 @@ class RoleBasedQuerysetMixin:
         role = getattr(user.profile, 'role', None)
 
         if role == 'client':
-            machines = Machine.objects.filter(client=user)
-
-            if machines.exists():
-                return self.queryset.filter(machine=machines)
-            else:
-                return self.queryset.none()
+            # для моделей, связанных с Machine через поле machine
+            if hasattr(self.queryset.model, 'machine'):
+                return self.queryset.filter(machine__client=user)
+            # если сама модель — это Machine
+            if self.queryset.model == Machine:
+                return self.queryset.filter(client=user)
 
         if role == 'service':
             return self.queryset.filter(serviceCompany=user)

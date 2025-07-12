@@ -1,0 +1,23 @@
+.resetButton {
+    padding: 8px 16px;
+    margin-bottom: 1rem;
+    background-color: #D20A11;
+    color: #EBE6D6;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.resetButton:hover {
+    background-color: #d32f2f;
+}
+
+.resetButton:disabled {
+    background-color: #0f3257;
+    color: #acaaaa;
+    border-color: #0056b3;
+    font-weight: bold;
+    box-shadow: none;
+    transform: scale(0.97);
+}
